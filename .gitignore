@@ -1,0 +1,18 @@
+# Modèles SMPL-X (volumineux + licence)
+smpl_models/
+
+# Données personnelles (photos réelles !)
+data/
+
+# Sorties générées (photos, masks, avatars, métriques)
+output/
+output_*/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.spyproject/

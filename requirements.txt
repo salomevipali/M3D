@@ -1,0 +1,22 @@
+# Avatar Pipeline — dépendances Python
+# Installation : pip install -r requirements.txt
+
+# Vision / Pose
+mediapipe>=0.10.0
+opencv-python>=4.8.0
+
+# SMPL-X
+smplx>=0.1.28
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Optimisation
+scipy>=1.11.0
+numpy>=1.24.0
+
+# Export 3D
+trimesh>=4.0.0
+Pillow>=10.0.0
+
+# Optionnel — visualisation locale
+# open3d>=0.17.0
