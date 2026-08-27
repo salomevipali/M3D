@@ -639,12 +639,6 @@ def _summary(
         f"{'─' * 56}"
     )
 
-    print(
-
-        f"  Masse grasse : "
-        f"{metrics.get('body_fat_percent', '?')} %"
-
-    )
 
     print(
 
@@ -653,12 +647,6 @@ def _summary(
 
     )
 
-    print(
-
-        f"  Masse maigre : "
-        f"{metrics.get('lean_mass_kg', '?')} kg"
-
-    )
 
     print(
 
@@ -667,12 +655,6 @@ def _summary(
 
     )
 
-    print(
-
-        f"  Masse osseuse : "
-        f"{metrics.get('bone_mass_kg', '?')} kg"
-
-    )
 
     print(
 
@@ -688,40 +670,9 @@ def _summary(
         )
 
         for key, label in [
-
-            (
-                "waist_cm",
-                "Tour de taille      ",
-            ),
-
             (
                 "belly_cm",
                 "Tour de ventre      ",
-            ),
-
-            (
-                "hip_cm",
-                "Tour de hanches     ",
-            ),
-
-            (
-                "chest_cm",
-                "Tour de poitrine    ",
-            ),
-
-            (
-                "neck_cm",
-                "Tour de cou         ",
-            ),
-
-            (
-                "thigh_cm",
-                "Tour de cuisse      ",
-            ),
-
-            (
-                "shoulder_width_cm",
-                "Largeur épaules     ",
             ),
 
             (
@@ -765,26 +716,27 @@ def main():
             "C:/Users/Restart/Desktop/"
             "VIPAVATAR-VIPANALYSE/"
             "avatar_project_local/"
-            "data/charlotte_face.jpeg",
+            "data/morgan_face.jpeg",
         image_side=
             "C:/Users/Restart/Desktop/"
             "VIPAVATAR-VIPANALYSE/"
             "avatar_project_local/"
-            "data/charlotte_profil.jpeg",
+            "data/morgan_profil.jpeg",
 
-        height_cm=170,
+        height_cm=185,
 
-        weight_kg=70,
+        weight_kg=84.7,
 
-        age=51,
+        age=42,
 
-        sex="female",
+        sex="male",
         
 
         output_dir="output",
 
         pose="relaxed",
-        activity_level = 1,
+
+        activity_level = 5,
 
     )
 

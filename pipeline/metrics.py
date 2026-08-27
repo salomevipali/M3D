@@ -1769,29 +1769,33 @@ def _compute_metabolic(
     
     activity_level = int(activity_level)
     
-    if activity_level not in (0, 1, 2, 3,4 ):
+    if activity_level not in (0, 1, 2, 3, 4,5 ):
         raise ValueError(
-            "activity_level doit être 0, 1, 2, 3, 4"
+            "activity_level doit être 0, 1, 2, 3, 4,5"
         )
     
     # Proportion de masse maigre considérée comme musculaire
+   # Proportion de masse maigre considérée comme musculaire
     MUSCLE_RATIO = {
-        0: 0.54,   # Sédentaire
-        4: 0.50,   # Actif sédentaire muscu
-        1: 0.58,   # Actif sédentaire endurance
-        2: 0.60,   # Très actif / sportif renforcement musculaire
-        3: 0.60    # Très actif / sportif sport d'endurance
+        0: 0.50,   # Léger / actif sédentaire — musculation
+        1: 0.55,   # Léger / actif sédentaire — endurance
+        2: 0.53,   # Léger actif sédentaire - un peu des 2
+        3: 0.58,   # Grand sportif — musculation
+        4: 0.60,   # Grand sportif — endurance
+        5: 0.59    # Grand sportif - un peu des 2
     }
     
     # Correction de l'estimation de masse grasse
     FAT_ADJUSTMENT = {
-        0: 0.00,   # aucune correction Sédentaire
-        4: 0.10,   # -10% actif sédentaire msucu
-        1: 0.25,   # -25% actif sédentaire endurance
-        2: 0.33,   # -33 %
-        3: 0.5,    # -50 %
-        
+        0: 0.10,  # Léger/actif sédentaire — musculation
+        1: 0.20,  # Léger/ actif sédentaire — endurance
+        2: 0.15,   # Léger / actif sédentaire - un peu des 2
+        3: 0.33,  # Grand sportif — musculation
+        4: 0.40,  # Grand sportif — endurance
+        5: 0.36,  # Grand sportif - un peu des 2
+       
     }
+        
     bf = _body_fat(
     m,
     age,
@@ -1838,7 +1842,7 @@ def _compute_metabolic(
         weight_kg
     )
 
-    bmr = _bmr_mifflin(
+    bmr = _bmr_black(
 
         weight_kg,
 
@@ -2080,6 +2084,25 @@ def _bmr_mifflin(
         bmr - 161
 
     )
+
+def _bmr_black(w: float, h_cm: float, age: int, sex: str) -> float:
+    """
+    Black, Coward, Cole, Prentice (1996) — basée sur méta-analyse eau doublement
+    marquée. Remplace Mifflin-St Jeor : exposant sur l'âge (^-0.13) plutôt qu'un
+    terme linéaire, jugée plus précise en population générale.
+ 
+    NB UNITÉS : la formule originale attend T en MÈTRES avec une constante de
+    conversion (1000/4.1855). Ici T = h_cm est utilisé directement en CM (cohérent
+    avec le reste du fichier), donc la constante a été divisée par 10 (1000 -> 100)
+    pour compenser : T_cm^0.5 = (T_m × 100)^0.5 = T_m^0.5 × 10.
+    Équivalent mathématiquement à la formule source, vérifié numériquement
+    (70kg/175cm/30ans homme -> ~1690 kcal dans les deux versions).
+    """
+    age   = max(age, 1)   # évite age**-0.13 indéfini/instable si age<=0
+    coeff = 1.083 if sex == "male" else 0.963
+    mb_mj = coeff * (w ** 0.48) * (h_cm ** 0.50) * (age ** -0.13)
+    return mb_mj * (100.0 / 4.1855)
+
 
 
 # =============================================================================
